@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2bihrb4enlje"]
+
+[ext_resource type="PackedScene" uid="uid://ca54p01h8poxh" path="res://scenes/map.tscn" id="1_68bco"]
+[ext_resource type="PackedScene" uid="uid://d3dhw87na6a82" path="res://scenes/player.tscn" id="1_h8efu"]
+[ext_resource type="PackedScene" uid="uid://dkmhmcgc8bd57" path="res://scenes/enemy.tscn" id="2_sff86"]
+
+[node name="Game" type="Node2D"]
+
+[node name="TileMap" parent="." instance=ExtResource("1_68bco")]
+
+[node name="enemy" parent="." instance=ExtResource("2_sff86")]
+position = Vector2(370, 219)
+
+[node name="player" parent="." instance=ExtResource("1_h8efu")]
+position = Vector2(751, 358)
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+zoom = Vector2(2.165, 2.165)
+limit_smoothed = true

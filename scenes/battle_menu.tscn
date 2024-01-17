@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=3 uid="uid://dljowvotdl45i"]
+
+[ext_resource type="Theme" uid="uid://bcbursk22k4ln" path="res://actions.tres" id="1_3op0b"]
+[ext_resource type="Theme" uid="uid://bh3tk5jmah80g" path="res://menu.tres" id="2_im8kh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_25l2u"]
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.247059, 0.247059, 0.247059, 1)
+corner_radius_bottom_left = 57
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwypf"]
+content_margin_left = 34.0
+content_margin_top = 39.0
+border_width_left = 10
+
+[node name="Control" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.606481
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.29
+theme_override_styles/panel = SubResource("StyleBoxFlat_25l2u")
+
+[node name="ItemList" type="VBoxContainer" parent="VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0547637
+anchor_right = 0.971493
+anchor_bottom = 0.878
+offset_right = 40.0
+offset_bottom = 40.0
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="VBoxContainer/Panel/ItemList"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_3op0b")
+text = "Attack"
+alignment = 0
+
+[node name="Button2" type="Button" parent="VBoxContainer/Panel/ItemList"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_3op0b")
+text = "Kick"
+
+[node name="Button3" type="Button" parent="VBoxContainer/Panel/ItemList"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_3op0b")
+text = "Headbutt"
+
+[node name="Panel2" type="PanelContainer" parent="VBoxContainer"]
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_xwypf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel2"]
+layout_mode = 2
+theme_override_constants/separation = -17
+
+[node name="Button" type="Button" parent="VBoxContainer/Panel2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("2_im8kh")
+text = "Attacks"
+alignment = 0
+
+[node name="Button2" type="Button" parent="VBoxContainer/Panel2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("2_im8kh")
+text = "Magic"
+alignment = 0

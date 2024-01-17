@@ -1,0 +1,156 @@
+[gd_scene load_steps=12 format=3 uid="uid://d3dhw87na6a82"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_m1yo4"]
+[ext_resource type="Texture2D" uid="uid://cdlgln4imljwm" path="res://assets/doc/PlagueDoctor_Walk.png" id="2_fbfsn"]
+[ext_resource type="Script" path="res://scripts/AnimationHandler.gd" id="2_jqj88"]
+[ext_resource type="Texture2D" uid="uid://b7tqkokmne3lb" path="res://assets/doc/PlagueDoctor_Attack-Sheet.png" id="2_mp36t"]
+[ext_resource type="Texture2D" uid="uid://c2sichuehljqp" path="res://assets/doc/PlagueDoctor_Idle.png" id="3_3gqtm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1c0bk"]
+size = Vector2(60.4167, 87.5001)
+
+[sub_resource type="Animation" id="Animation_vltbc"]
+resource_name = "attack"
+length = 0.7
+step = 1.9895
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Attack:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0501426, 0.100067, 0.150101, 0.200134, 0.300242, 0.350068, 0.450128, 0.500099, 0.550016, 0.600154, 0.650083),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_cryv4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Attack:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Idle:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Walk:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_sfmfy"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Idle:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.000103804, 0.100171, 0.501773),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_m3mh1"]
+resource_name = "walk"
+length = 0.904
+loop_mode = 1
+step = 0.0785
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Walk:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(7.56457e-05, 0.151004, 0.301222, 0.451151, 0.601474, 0.751381),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e4n20"]
+_data = {
+"RESET": SubResource("Animation_cryv4"),
+"attack": SubResource("Animation_vltbc"),
+"idle": SubResource("Animation_sfmfy"),
+"walk": SubResource("Animation_m3mh1")
+}
+
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animation_handler")]
+position = Vector2(-9.53674e-07, -9.53674e-07)
+scale = Vector2(0.48, 0.48)
+script = ExtResource("1_m1yo4")
+animation_handler = NodePath("AnimationHandler")
+
+[node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animation_player", "idle", "attack", "walk")]
+script = ExtResource("2_jqj88")
+animation_player = NodePath("../AnimationPlayer")
+idle = NodePath("../Idle")
+attack = NodePath("../Attack")
+walk = NodePath("../Walk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.125, 2.08333)
+scale = Vector2(0.999999, 0.999999)
+shape = SubResource("RectangleShape2D_1c0bk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_e4n20")
+}
+autoplay = "attack"
+
+[node name="Attack" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(10.4167, -10.4167)
+scale = Vector2(3, 3)
+texture = ExtResource("2_mp36t")
+vframes = 12
+
+[node name="Idle" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(3.8147e-06, 1.90735e-06)
+scale = Vector2(3, 3)
+texture = ExtResource("3_3gqtm")
+hframes = 2
+
+[node name="Walk" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(1.98682e-06, 1.98682e-06)
+scale = Vector2(3, 3)
+texture = ExtResource("2_fbfsn")
+hframes = 8

@@ -1,0 +1,20 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bcbursk22k4ln"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vp7fp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dgyae"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aeh51"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7iyrh"]
+
+[resource]
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(0.701961, 0.701961, 0.701961, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 52
+Button/styles/focus = SubResource("StyleBoxEmpty_vp7fp")
+Button/styles/hover = SubResource("StyleBoxEmpty_dgyae")
+Button/styles/normal = SubResource("StyleBoxEmpty_aeh51")
+Button/styles/pressed = SubResource("StyleBoxEmpty_7iyrh")
