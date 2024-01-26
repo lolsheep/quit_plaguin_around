@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://dkmhmcgc8bd57"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_tdequ"]
+[ext_resource type="Script" path="res://scripts/StateManager.gd" id="2_3sa53"]
+[ext_resource type="Script" path="res://scripts/Idle.gd" id="3_7d2er"]
+[ext_resource type="Script" path="res://scripts/Roam.gd" id="4_0jcrb"]
+[ext_resource type="Script" path="res://scripts/Flee.gd" id="5_1skr4"]
+[ext_resource type="Script" path="res://scripts/LockOn.gd" id="6_eadqi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jikhv"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sxuk2"]
+radius = 214.285
+
+[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("state_manager", "aggro_range", "polygon") groups=["enemies"]]
+scale = Vector2(0.560001, 0.560001)
+script = ExtResource("1_tdequ")
+state_manager = NodePath("StateManager")
+aggro_range = NodePath("aggro")
+polygon = NodePath("Polygon2D")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-32, -32)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 64, 64, 64, 64, 0, 0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jikhv")
+
+[node name="aggro" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="aggro"]
+shape = SubResource("CircleShape2D_sxuk2")
+
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("idle", "roam", "flee", "lock_on")]
+script = ExtResource("2_3sa53")
+idle = NodePath("Idle")
+roam = NodePath("Roam")
+flee = NodePath("Flee")
+lock_on = NodePath("LockOn")
+
+[node name="Idle" type="Node" parent="StateManager"]
+script = ExtResource("3_7d2er")
+
+[node name="Roam" type="Node" parent="StateManager"]
+script = ExtResource("4_0jcrb")
+
+[node name="Flee" type="Node" parent="StateManager"]
+script = ExtResource("5_1skr4")
+
+[node name="LockOn" type="Node" parent="StateManager"]
+script = ExtResource("6_eadqi")
+
+[connection signal="body_entered" from="aggro" to="StateManager/Roam" method="_on_aggro_body_entered"]
+[connection signal="body_exited" from="aggro" to="StateManager/Flee" method="_on_aggro_body_exited"]

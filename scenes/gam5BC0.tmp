@@ -3,17 +3,22 @@
 [ext_resource type="PackedScene" uid="uid://d3dhw87na6a82" path="res://scenes/player.tscn" id="1_h8efu"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_jfmgv"]
 [ext_resource type="PackedScene" uid="uid://blyqwa2arqvra" path="res://scenes/map2.tscn" id="2_lmbkp"]
-[ext_resource type="PackedScene" uid="uid://dkmhmcgc8bd57" path="res://scenes/enemy.tscn" id="4_hemtb"]
 
 [sub_resource type="Environment" id="Environment_noo7q"]
 ambient_light_energy = 9.08
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_m4jie"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(689.673, 173.278, 684.653, 184.986, 692.684, 184.986), PackedVector2Array(685.657, 172.107, 681.641, 183.815, 699.711, 190.84, 702.723, 176.79, 686.661, 173.278)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("tile_map")]
 script = ExtResource("1_jfmgv")
 tile_map = NodePath("TileMap")
 
+[node name="TileMap" parent="." instance=ExtResource("2_lmbkp")]
+
 [node name="player" parent="." instance=ExtResource("1_h8efu")]
-position = Vector2(824, 328)
+position = Vector2(751, 358)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(3.09, 3.09)
@@ -22,7 +27,6 @@ limit_smoothed = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_noo7q")
 
-[node name="TileMap" parent="." instance=ExtResource("2_lmbkp")]
-
-[node name="enemy" parent="." instance=ExtResource("4_hemtb")]
-position = Vector2(728, 232)
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+scale = Vector2(0.996125, 0.85412)
+navigation_polygon = SubResource("NavigationPolygon_m4jie")

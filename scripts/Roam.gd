@@ -1,18 +1,17 @@
 class_name Roam
 extends State
 
-var direction = Vector2.ZERO
 var wander_timer = 2
 var player_entered = false
-
+var direction
 func _ready():
-	
-	x_direction()
+
+	rand_direction()
 	
 func rand_direction():
 	
 	direction = Vector2(randf_range(-1,1), randf_range(-1,1))
-	wander_timer = randf_range(1,2)
+	wander_timer = randf_range(0,2)
 	
 func x_direction():
 	
@@ -26,24 +25,30 @@ func y_direction():
 	direction.x = 0
 	wander_timer = randf_range(1,2)
 
-
 func physics_process(delta):
 	
-	if player_entered:
-		player_entered = false
-		return States.LockOn
+	entity.direction = direction
+
+	if player_entered and not entity.has_plague:
+		return States.Flee
 		
+	if entity.has_plague:
+		entity.find_nearest_person()
+		return States.LockOn
+			
 	if wander_timer > 0:
 		wander_timer -= delta
 	else:
-		x_direction()
+		rand_direction()
+		wander_timer = randf_range(1,2)
 		return States.Idle
-		
-	entity.velocity = direction * 100
+			
+	entity.velocity = entity.direction * entity.mv_speed
 	entity.move_and_slide()
+	
 	return States.Null
 
 func _on_aggro_body_entered(b):
-	if b is Player:
+	if b is Entity and b.has_plague:
 		player_entered = true
 

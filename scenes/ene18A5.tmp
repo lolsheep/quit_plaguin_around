@@ -10,25 +10,10 @@
 [ext_resource type="Script" path="res://scripts/LockOn.gd" id="6_eadqi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jikhv"]
-size = Vector2(45.8991, 34.8328)
+size = Vector2(64, 64)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sxuk2"]
-radius = 304.953
-
-[sub_resource type="Animation" id="Animation_8awgd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
+radius = 214.285
 
 [sub_resource type="Animation" id="Animation_aoprg"]
 resource_name = "sprite"
@@ -47,25 +32,34 @@ tracks/0/keys = {
 "values": [0, 1, 2]
 }
 
+[sub_resource type="Animation" id="Animation_8awgd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vfrlh"]
 _data = {
 "RESET": SubResource("Animation_8awgd"),
 "walk": SubResource("Animation_aoprg")
 }
 
-[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("state_manager", "aggro_range", "sprite", "particles", "animation_player", "navigation_agent", "timer") groups=["enemies"]]
-scale = Vector2(1.68068, 1.68068)
-collision_mask = 3
-motion_mode = 1
-wall_min_slide_angle = 0.0
+[node name="enemy" type="CharacterBody2D" node_paths=PackedStringArray("state_manager", "aggro_range", "sprite", "particles", "animation_player") groups=["enemies"]]
 script = ExtResource("1_tdequ")
 state_manager = NodePath("StateManager")
 aggro_range = NodePath("aggro")
 sprite = NodePath("Sprite2D")
 particles = NodePath("GPUParticles2D")
 animation_player = NodePath("AnimationPlayer")
-navigation_agent = NodePath("Nav/NavigationAgent2D")
-timer = NodePath("Nav/Timer")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 visible = false
@@ -79,11 +73,10 @@ texture = ExtResource("2_jwh4m")
 vframes = 3
 
 [node name="GPUParticles2D" parent="." instance=ExtResource("2_abb7c")]
-position = Vector2(0, -7.57913)
+position = Vector2(0, -28.5714)
 emitting = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1.12938e-07)
 scale = Vector2(0.165126, 0.217586)
 shape = SubResource("RectangleShape2D_jikhv")
 
@@ -118,17 +111,5 @@ libraries = {
 }
 speed_scale = 1.35
 
-[node name="Nav" type="Node2D" parent="."]
-scale = Vector2(0.594997, 0.594997)
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Nav"]
-debug_enabled = true
-
-[node name="Timer" type="Timer" parent="Nav"]
-wait_time = 0.62
-autostart = true
-
-[connection signal="body_entered" from="aggro" to="StateManager/Idle" method="_on_aggro_body_entered"]
 [connection signal="body_entered" from="aggro" to="StateManager/Roam" method="_on_aggro_body_entered"]
 [connection signal="body_exited" from="aggro" to="StateManager/Flee" method="_on_aggro_body_exited"]
-[connection signal="timeout" from="Nav/Timer" to="." method="_on_timer_timeout"]

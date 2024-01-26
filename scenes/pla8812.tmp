@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3dhw87na6a82"]
+[gd_scene load_steps=12 format=3 uid="uid://d3dhw87na6a82"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_m1yo4"]
 [ext_resource type="Texture2D" uid="uid://cdlgln4imljwm" path="res://assets/doc/PlagueDoctor_Walk.png" id="2_fbfsn"]
 [ext_resource type="Script" path="res://scripts/AnimationHandler.gd" id="2_jqj88"]
 [ext_resource type="Texture2D" uid="uid://b7tqkokmne3lb" path="res://assets/doc/PlagueDoctor_Attack-Sheet.png" id="2_mp36t"]
-[ext_resource type="Texture2D" uid="uid://byjlwn1sbrwyo" path="res://assets/doc/PlagueDoctor_Shoot-Sheet.png" id="3_2o0ul"]
 [ext_resource type="Texture2D" uid="uid://c2sichuehljqp" path="res://assets/doc/PlagueDoctor_Idle.png" id="3_3gqtm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1c0bk"]
@@ -12,7 +11,7 @@ size = Vector2(60.4167, 87.5001)
 
 [sub_resource type="Animation" id="Animation_vltbc"]
 resource_name = "attack"
-length = 0.728
+length = 1.1205
 step = 1.9895
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -29,11 +28,11 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Attack/Hitbox/CollisionPolygon2D:disabled")
+tracks/1/path = NodePath("Attack/Area2D/CollisionPolygon2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.33, 0.53),
+"times": PackedFloat32Array(0, 0.33, 0.61),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -41,7 +40,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_sfmfy"]
 resource_name = "idle"
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -96,7 +94,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Attack/Hitbox/CollisionPolygon2D:disabled")
+tracks/3/path = NodePath("Attack/Area2D/CollisionPolygon2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -109,7 +107,6 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="Animation_m3mh1"]
 resource_name = "walk"
 length = 0.904
-loop_mode = 1
 step = 0.0785
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -133,20 +130,17 @@ _data = {
 }
 
 [node name="player" type="CharacterBody2D" node_paths=PackedStringArray("animation_handler")]
-z_index = 1
 position = Vector2(-9.53674e-07, -9.53674e-07)
-scale = Vector2(0.167351, 0.167351)
-collision_mask = 3
+scale = Vector2(0.48, 0.48)
 script = ExtResource("1_m1yo4")
 animation_handler = NodePath("AnimationHandler")
 
-[node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animation_player", "idle", "attack", "walk", "attack_hitbox")]
+[node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animation_player", "idle", "attack", "walk")]
 script = ExtResource("2_jqj88")
 animation_player = NodePath("../AnimationPlayer")
 idle = NodePath("../Idle")
 attack = NodePath("../Attack")
 walk = NodePath("../Walk")
-attack_hitbox = NodePath("../Attack/Hitbox")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3.125, 2.08333)
@@ -160,27 +154,18 @@ libraries = {
 autoplay = "Walk"
 speed_scale = 0.791
 
-[node name="Gun" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-position = Vector2(10.4167, -16.6667)
-scale = Vector2(5, 5)
-texture = ExtResource("3_2o0ul")
-vframes = 9
-
 [node name="Attack" type="Sprite2D" parent="."]
-visible = false
 texture_filter = 1
-position = Vector2(0, -29.1667)
+position = Vector2(25, -29.1667)
 scale = Vector2(5, 5)
 texture = ExtResource("2_mp36t")
 vframes = 12
 
-[node name="Hitbox" type="Area2D" parent="Attack"]
+[node name="Area2D" type="Area2D" parent="Attack"]
 position = Vector2(-5, 5.83334)
 scale = Vector2(0.2, 0.2)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack/Hitbox"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack/Area2D"]
 position = Vector2(6.25, 1.98682e-06)
 polygon = PackedVector2Array(20.8333, -100, 66.6667, -64.5833, 77.0833, 20.8333, 68.75, 81.25, 156.25, -6.25, 137.5, -79.1667)
 disabled = true
@@ -203,4 +188,3 @@ hframes = 8
 
 [connection signal="animation_finished" from="AnimationPlayer" to="AnimationHandler" method="_on_animation_player_animation_finished"]
 [connection signal="animation_started" from="AnimationPlayer" to="AnimationHandler" method="_on_animation_player_animation_started"]
-[connection signal="body_entered" from="Attack/Hitbox" to="." method="_on_hitbox_body_entered"]

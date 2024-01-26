@@ -5,6 +5,7 @@ enum States {
 	Null,
 	Idle,
 	Roam,
+	Flee,
 	LockOn
 }
 

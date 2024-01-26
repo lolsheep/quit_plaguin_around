@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://37y0uh5ud8kc"]
+
+[ext_resource type="Texture2D" uid="uid://c4qu82nsvdhy" path="res://assets/texture/sick.png" id="1_vodhy"]
+
+[sub_resource type="Gradient" id="Gradient_enkbi"]
+interpolation_color_space = 1
+offsets = PackedFloat32Array(0, 0.565574)
+colors = PackedColorArray(0.00427003, 0.503696, 1.2514e-06, 1, 0.365262, 1, 0.335952, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vog7c"]
+gradient = SubResource("Gradient_enkbi")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t3pa7"]
+lifetime_randomness = 0.2
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(3.76, 1, 1)
+direction = Vector3(0, -0.305, 0)
+gravity = Vector3(0, -32.08, 0)
+scale_min = 0.45
+scale_max = 0.65
+color = Color(0, 1, 0, 1)
+color_ramp = SubResource("GradientTexture1D_vog7c")
+hue_variation_min = -0.29
+hue_variation_max = 0.15
+turbulence_noise_strength = 19.37
+turbulence_noise_scale = 9.585
+turbulence_noise_speed = Vector3(0, -28.695, 0)
+turbulence_noise_speed_random = 3.36
+turbulence_influence_max = 0.685
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_t3pa7")
+texture = ExtResource("1_vodhy")
+lifetime = 1.15
+explosiveness = 0.25
+randomness = 0.3
+fixed_fps = 100

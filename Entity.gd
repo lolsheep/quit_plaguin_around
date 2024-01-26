@@ -8,6 +8,8 @@ var type
 var inventory
 var mv_speed
 var attack_speed
+var has_plague = false
+
 
 func attack():
 	pass

@@ -125,7 +125,7 @@ scale = Vector2(0.594997, 0.594997)
 debug_enabled = true
 
 [node name="Timer" type="Timer" parent="Nav"]
-wait_time = 0.62
+wait_time = 0.75
 autostart = true
 
 [connection signal="body_entered" from="aggro" to="StateManager/Idle" method="_on_aggro_body_entered"]

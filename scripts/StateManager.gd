@@ -3,11 +3,13 @@ extends Node
 
 @export var idle : Node
 @export var roam : Node
+@export var flee : Node
 @export var lock_on : Node
 
 @onready var states = {
 	State.States.Idle : idle,
 	State.States.Roam : roam,
+	State.States.Flee : flee,
 	State.States.LockOn : lock_on
 }
 var current : State
